@@ -1,30 +1,5 @@
-//#include <sys/types.h>
-//#include <sys/socket.h>
-//#include <netinet/in.h>
-//#include <netdb.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <pthread.h>
-#include <stdlib.h>
-#include <cv.h>
-#include <highgui.h>
-#include <math.h>
 
-//TODO: De-allocate dynamic memory
-#define TODO_FROM_KEVIN 0.0
-
-typedef struct Line {
-	double nx;
-	double ny;
-	double d;
-	struct Line * next;
-} Line;
-
-typedef struct CourtLines {
-	Line * hor;
-	Line * ver;
-} CourtLines;
+#include "ModelFitting.h"
 
 double calib_params[3][3];
 double best_calib_params[3][3];
@@ -38,15 +13,6 @@ CvPoint2D64f Left_Border_Center, Top_Border_Center;
 CvMat matrix_1, matrix_2, matrix_3, matrix_4, matrix_5, matrix_6;
 Line ** Model_Hor_Line_Array, ** Model_Ver_Line_Array;
 Line ** Image_Hor_Line_Array, ** Image_Ver_Line_Array;
-
-int Fit_Model_To_Image (Line *);
-int Build_Model_Data_Structure (void);
-int Build_Image_Data_Structure (Line *);
-int compare_routine_hor (const void *, const void *);
-int compare_routine_ver (const void *, const void *);
-int Compute_Intersection_Of_2Lines (CvPoint2D64f *, Line *, Line *);
-int Evaluate_Model_Support (void);
-int Compute_Matching_Score (double *);
 
 //int main(int argc, char * argv[]) {
 //	//Build model data structure
@@ -252,6 +218,11 @@ int Compute_Intersection_Of_2Lines (CvPoint2D64f * cio2_point, Line * cio2_line_
 
 int Compute_Matching_Score (double * cms_image_point) {
 	//TODO: Kevin
+  /*Given a point, 
+   2 if on a line
+   -1 if not on line
+   0 if outside image boundary
+   */
 	return (0);
 }
 

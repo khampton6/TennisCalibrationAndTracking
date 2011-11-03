@@ -5,14 +5,8 @@ CXX = g++
 CXXFLAGS = -bind_at_load `pkg-config --cflags opencv`
 LFLAGS = `pkg-config --libs opencv`
 
-SRC = \
-	main.cpp # \
-#	Media.cpp \
-#	Image.cpp \
-#	TargetImage.cpp \
-#	InputImage.cpp \
-#	ImagePool.cpp \
-#	MosaicSquare.cpp
+
+SRC = main.cpp LinePrediction.cpp ModelFitting.cpp
 
 OBJS = $(SRC:.cpp=.o)
 
