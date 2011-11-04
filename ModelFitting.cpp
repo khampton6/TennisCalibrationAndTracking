@@ -107,8 +107,8 @@ int Build_Model_Data_Structure (void) {
 
 int compare_routine_hor (const void * crh_param_a, const void * crh_param_b) {
 	double crh_w_a, crh_w_b;
-	Line * crh_line_a = (Line *) crh_param_a;
-	Line * crh_line_b = (Line *) crh_param_b;
+	Line * crh_line_a = *((Line **) crh_param_a);
+	Line * crh_line_b = *((Line **) crh_param_b);
 	crh_w_a = (crh_line_a->nx)*(Top_Border_Center.x) + 
 	          (crh_line_a->ny)*(Top_Border_Center.y) + 
 		  (crh_line_a->d)*1;
@@ -120,8 +120,8 @@ int compare_routine_hor (const void * crh_param_a, const void * crh_param_b) {
 
 int compare_routine_ver (const void * crv_param_a, const void * crv_param_b) {
 	double crv_w_a, crv_w_b;
-	Line * crv_line_a = (Line *) crv_param_a;
-	Line * crv_line_b = (Line *) crv_param_b;
+	Line * crv_line_a = *((Line **) crv_param_a);
+	Line * crv_line_b = *((Line **) crv_param_b);
 	crv_w_a = (crv_line_a->nx)*(Left_Border_Center.x) + 
 	          (crv_line_a->ny)*(Left_Border_Center.y) + 
 		  (crv_line_a->d)*1;
@@ -142,11 +142,14 @@ int Build_Image_Data_Structure (Line * BIDS_Image_Lines) {
 		bids_nx = BIDS_Image_Lines->nx;
 		bids_ny = BIDS_Image_Lines->ny;
 		bids_d  = BIDS_Image_Lines->d;
+		printf ("NX: %lf, NY: %lf, D: %lf, ", bids_nx, bids_ny, bids_d);
 		
 		bids_is_hor_line = 1;
-		if ( fabs(atan2(bids_ny, bids_nx)) < (55/126) ) {
+		printf("Angle: %lf, ", fabs(atan2(fabs(bids_ny), fabs(bids_nx))));
+		if ( fabs(atan2(fabs(bids_ny), fabs(bids_nx))) < (((double) 44)/63) ) {
 			bids_is_hor_line = 0;
 		}
+		printf ("bids_is_hor_line: %d\n", bids_is_hor_line);
 		
 		if (bids_is_hor_line) {
 			bids_curr_hor = (Line *) malloc(sizeof(struct Line));
@@ -179,8 +182,7 @@ int Build_Image_Data_Structure (Line * BIDS_Image_Lines) {
 		BIDS_Image_Lines = BIDS_Image_Lines->next;
 	}
 	
-	qsort(CImage.hor, image_hor_line_count, sizeof(struct Line), compare_routine_hor);
-	qsort(CImage.ver, image_ver_line_count, sizeof(struct Line), compare_routine_ver);
+	//printf ("HERE1\n");
 	
 	Image_Hor_Line_Array = (Line**) malloc(image_hor_line_count*sizeof(Line *));
 	bids_var1 = 0;
@@ -188,8 +190,11 @@ int Build_Image_Data_Structure (Line * BIDS_Image_Lines) {
 	while (bids_curr_hor != NULL) {
 		*(Image_Hor_Line_Array+bids_var1) = bids_curr_hor;
 		bids_var1++;
+		//printf ("bids_var1: %d\n", bids_var1);
 		bids_curr_hor = bids_curr_hor->next;
 	}
+	
+	//printf ("HERE2\n");
 	
 	Image_Ver_Line_Array = (Line**) malloc(image_ver_line_count*sizeof(Line *));
 	bids_var1 = 0;
@@ -199,6 +204,9 @@ int Build_Image_Data_Structure (Line * BIDS_Image_Lines) {
 		bids_var1++;
 		bids_curr_ver = bids_curr_ver->next;
 	}
+
+	qsort(Image_Hor_Line_Array, image_hor_line_count, sizeof(Line *), compare_routine_hor);
+	qsort(Image_Ver_Line_Array, image_ver_line_count, sizeof(Line *), compare_routine_ver);
 	
 	return (0);
 }
@@ -365,6 +373,7 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 	double fmti_matrix_1[8][8], fmti_matrix_2[8], fmti_matrix_3[8], fmti_matrix_4[8][8] = {0.0};
 	double fmti_matrix_5[3][3] = {0.0};
 	double fmti_f2, fmti_b2_nr, fmti_b2_dr, fmti_b2;
+	int temp_var; Line * temp_line;
 	
 	Left_Border_Center.x = 0;
 	Left_Border_Center.y = 176;
@@ -372,6 +381,18 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 	Top_Border_Center.y = 0;
 	Build_Model_Data_Structure();
 	Build_Image_Data_Structure(FMTI_Image_Lines);
+	
+	printf ("Hor lines:%d, Ver lines:%d\n", image_hor_line_count, image_ver_line_count);	
+	printf ("Hor Lines:\n");
+	for (temp_var=0; temp_var<image_hor_line_count; temp_var++) {
+		temp_line = Image_Hor_Line_Array[temp_var];
+		printf ("NX: %lf, NY: %lf, D: %lf\n", temp_line->nx, temp_line->ny, temp_line->d);
+	}
+	printf ("Ver Lines:\n");
+	for (temp_var=0; temp_var<image_ver_line_count; temp_var++) {
+		temp_line = Image_Ver_Line_Array[temp_var];
+		printf ("NX: %lf, NY: %lf, D: %lf\n", temp_line->nx, temp_line->ny, temp_line->d);
+	} 
 	
 	for (fmti_var1=0; fmti_var1<(5-1); fmti_var1++) {
 		for (fmti_var2=(fmti_var1+1); fmti_var2<5; fmti_var2++) {

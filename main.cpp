@@ -50,9 +50,10 @@ int main(int argc, char** argv) {
   
   myLine = Image_Lines_From_Kevin;
   while (myLine != NULL) {
-  	printf ("NX: %lf, NY: %lf, D: %lf\n", myLine->nx, myLine->ny, myLine->d);
+  	//printf ("NX: %lf, NY: %lf, D: %lf\n", myLine->nx, myLine->ny, myLine->d);
 	myLine = myLine->next;
   }
+  printf ("\n");
   
   Fit_Model_To_Image(Image_Lines_From_Kevin);
   return(0);

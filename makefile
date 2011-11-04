@@ -2,7 +2,7 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 export LDLIBRARY_PATH=/usr
 
 CXX = g++
-CXXFLAGS = -bind_at_load `pkg-config --cflags opencv`
+CXXFLAGS = -g -bind_at_load `pkg-config --cflags opencv`
 LFLAGS = `pkg-config --libs opencv`
 
 

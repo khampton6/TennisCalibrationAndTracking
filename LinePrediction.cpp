@@ -26,11 +26,14 @@ Line* houghDetectLines(IplImage* src) {
     
     CvPoint* lin = (CvPoint*)cvGetSeqElem(lines,i);
     
-    double xdist = lin[0].x-lin[1].x;
-    double ydist = lin[0].y-lin[1].y;
+    //double xdist = lin[0].x-lin[1].x;
+    //double ydist = lin[0].y-lin[1].y;
+    double xdist = -(lin[1].y-lin[0].y);
+    double ydist = lin[1].x-lin[0].x;
     double norm = sqrt(xdist*xdist + ydist*ydist);
     
-    double d = abs(xdist*lin[0].y - lin[0].x*ydist) / norm;
+    //double d = abs(xdist*lin[0].y - lin[0].x*ydist) / norm;
+    double d = abs(lin[1].x*lin[0].y - lin[0].x*lin[1].y) / norm;
     
     Vec<double, 7> v(lin[0].x, lin[0].y, lin[1].x, lin[1].y, xdist/norm, ydist/norm, d);
     vecs.push_back(v);
@@ -109,6 +112,7 @@ Line* houghDetectLines(IplImage* src) {
     currLine->ny = vl[5];
     currLine->d  = vl[6];
     currLine->next = NULL;
+    printf ("X0: %10.6lf, Y0: %10.6lf, X1: %10.6lf, Y1: %10.6lf, NX: %10.6lf, NY: %10.6lf, D: %10.6lf\n", vl[0], vl[1], vl[2], vl[3], vl[4], vl[5], vl[6]);
     if (prevLine != NULL) {
     	prevLine->next = currLine;
     } else {
