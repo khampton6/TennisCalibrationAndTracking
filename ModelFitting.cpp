@@ -1,5 +1,6 @@
 
 #include "ModelFitting.h"
+#include "LinePrediction.h"
 
 double calib_params[3][3];
 double best_calib_params[3][3];
@@ -223,7 +224,24 @@ int Compute_Matching_Score (double * cms_image_point) {
    -1 if not on line
    0 if outside image boundary
    */
-	return (0);
+  int j = (int)cms_image_point[0];
+  int i = (int)cms_image_point[1];
+  
+  float* data = (float *)lineImage->imageData;
+  
+	int red = ((uchar *)(lineImage->imageData + i*lineImage->widthStep))[j*lineImage->nChannels + 2];
+	int green = ((uchar *)(lineImage->imageData + i*lineImage->widthStep))[j*lineImage->nChannels + 1];
+	int blue = ((uchar *)(lineImage->imageData + i*lineImage->widthStep))[j*lineImage->nChannels + 0];
+  
+  if(j < lineImage->width || i < lineImage->height) {
+    return 0;
+  }
+  else if(red > 200) {
+    return 2;
+  }
+  else {
+    return -1;
+  }
 }
 
 int Evaluate_Model_Support (void) {

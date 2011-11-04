@@ -14,8 +14,8 @@ Line* houghDetectLines(IplImage* src) {
   CvMemStorage* storage = cvCreateMemStorage(0);
   CvSeq* lines = 0;
   IplImage* color_dst = cvCreateImage(cvGetSize(src), 8, 3);
-  IplImage* line_dst = cvCreateImage(cvGetSize(src), 8, 3);
-  cvSet(line_dst, cvScalar(0,0,0));
+  lineImage = cvCreateImage(cvGetSize(src), 8, 3);
+  cvSet(lineImage, cvScalar(0,0,0));
   
   lines = cvHoughLines2(src, storage, CV_HOUGH_PROBABILISTIC, 
                         1, CV_PI/180,80,15,10);
@@ -35,7 +35,7 @@ Line* houghDetectLines(IplImage* src) {
     Vec<double, 7> v(lin[0].x, lin[0].y, lin[1].x, lin[1].y, xdist/norm, ydist/norm, d);
     vecs.push_back(v);
     
-    cvLine(color_dst, lin[0], lin[1], CV_RGB(255,0,0),1,8);
+    cvLine(lineImage, lin[0], lin[1], CV_RGB(255,0,0),1,8);
   }
   
   //Line Refinement
@@ -46,7 +46,7 @@ Line* houghDetectLines(IplImage* src) {
     tt.y = vecs[j][1];
     ttt.x = vecs[j][2];
     ttt.y = vecs[j][3];
-    cvLine(line_dst, tt, ttt, CV_RGB(0,255,255),1,8);
+    cvLine(lineImage, tt, ttt, CV_RGB(255,0,255),1,8);
     
     double x_diff = abs(tt.x-ttt.x);
     double y_diff = abs(tt.y-ttt.y);
@@ -91,7 +91,7 @@ Line* houghDetectLines(IplImage* src) {
         t1.y = vecs[i][1];
         t2.x = vecs[i][2];
         t2.y = vecs[i][3];
-        cvLine(line_dst, t1, t2, CV_RGB(0,0,255),1,8);
+        cvLine(lineImage, t1, t2, CV_RGB(0,0,255),1,8);
         vecs.erase(vecs.begin()+i);
         i--;
       }
