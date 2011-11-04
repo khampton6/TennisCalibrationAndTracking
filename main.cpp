@@ -15,6 +15,7 @@ using namespace cv;
 int main(int argc, char** argv) {
   
   const char* movie = "trimmed.avi";
+  Line * myLine;
   
   if(argc == 2) {
     movie = argv[1];
@@ -46,6 +47,12 @@ int main(int argc, char** argv) {
   IplImage j = grads;
   
   Line* Image_Lines_From_Kevin = houghDetectLines(&j);
+  
+  myLine = Image_Lines_From_Kevin;
+  while (myLine != NULL) {
+  	printf ("NX: %lf, NY: %lf, D: %lf\n", myLine->nx, myLine->ny, myLine->d);
+	myLine = myLine->next;
+  }
   
   Fit_Model_To_Image(Image_Lines_From_Kevin);
   return(0);

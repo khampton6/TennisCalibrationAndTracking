@@ -99,26 +99,22 @@ Line* houghDetectLines(IplImage* src) {
   }
   
   //Copy into Line list
-  Vec<double, 7> vl = vecs[0];
-  Line* head = (Line*)malloc(sizeof(struct Line));
-  head->nx = vl[4];
-  head->ny = vl[5];
-  head->d = vl[6];
+  Vec<double, 7> vl;  
+  Line * head = NULL, * currLine = NULL, * prevLine = NULL;
   
-  Line* currLine = head;
-  
-  for(int i = 1; i < vecs.size(); i++) {
-    
+  for(int i = 0; i < vecs.size(); i++) {
     vl = vecs[i];
-    Line* newLine = (Line*)malloc(sizeof(struct Line));
-    newLine->nx = vl[4]; 
-    newLine->ny = vl[5];
-    newLine->d = vl[6];
-    
-    cout << "NX: " << vl[4] << " NY: " << vl[5] << " D " << vl[6] << endl;
-    
-    currLine->next = newLine;
-    currLine = newLine;
+    currLine = (Line*) malloc(sizeof(struct Line));
+    currLine->nx = vl[4]; 
+    currLine->ny = vl[5];
+    currLine->d  = vl[6];
+    currLine->next = NULL;
+    if (prevLine != NULL) {
+    	prevLine->next = currLine;
+    } else {
+    	head = currLine;
+    }
+    prevLine = currLine;
   }
   return head;
 }
