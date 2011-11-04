@@ -23,7 +23,7 @@
 #include <math.h>
 
 //TODO: De-allocate dynamic memory
-#define TODO_FROM_KEVIN 0.0
+/* #define TODO_FROM_KEVIN 0.0 */
 
 typedef struct Line {
 	double nx;

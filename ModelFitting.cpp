@@ -47,15 +47,15 @@ int Build_Model_Data_Structure (void) {
 	//Distance 'd' measured in feet
 	//Hor lines are ordered from top to bottom
 	bmds_curr = CModel.hor;
-	bmds_curr->d = -21;
+	bmds_curr->d = 21;
 	bmds_curr = bmds_curr->next;
-	bmds_curr->d = -39;
+	bmds_curr->d = 39;
 	bmds_curr = bmds_curr->next;
-	bmds_curr->d = -60;
+	bmds_curr->d = 60;
 	bmds_curr = bmds_curr->next;
-	bmds_curr->d = -81;
+	bmds_curr->d = 81;
 	bmds_curr = bmds_curr->next;
-	bmds_curr->d = -99;
+	bmds_curr->d = 99;
 	bmds_curr = bmds_curr->next; //bmds_curr should point to NULL here
 
 	bmds_prev = NULL; bmds_curr = NULL;
@@ -73,15 +73,15 @@ int Build_Model_Data_Structure (void) {
 	}
 	//Ver lines are ordered from left to right
 	bmds_curr = CModel.ver;
-	bmds_curr->d = -48;
+	bmds_curr->d = 12;
 	bmds_curr = bmds_curr->next;
-	bmds_curr->d = -43.5;
+	bmds_curr->d = 16.5;
 	bmds_curr = bmds_curr->next;
-	bmds_curr->d = -30;
+	bmds_curr->d = 30;
 	bmds_curr = bmds_curr->next;
-	bmds_curr->d = -16.5;
+	bmds_curr->d = 43.5;
 	bmds_curr = bmds_curr->next;
-	bmds_curr->d = -12;
+	bmds_curr->d = 48;
 	bmds_curr = bmds_curr->next; //bmds_curr should point to NULL here
 	
 	Model_Hor_Line_Array = (Line**) malloc(5*sizeof(Line *));
@@ -232,8 +232,8 @@ int Evaluate_Model_Support (void) {
 	double ems_model_point[3], ems_image_point[3];
 	CvMat ems_model_matrix, ems_image_matrix;
 	
-	ems_var2 = -21;
-	for (ems_var1=-12; ems_var1>-48; ems_var1--) {
+	ems_var2 = 21;
+	for (ems_var1=12; ems_var1<48; ems_var1++) {
 		ems_model_point[0] = ems_var1;
 		ems_model_point[1] = ems_var2;
 		ems_model_point[2] = 1;
@@ -243,8 +243,8 @@ int Evaluate_Model_Support (void) {
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
-	ems_var2 = -39;
-	for (ems_var1=-12; ems_var1>-48; ems_var1--) {
+	ems_var2 = 39;
+	for (ems_var1=12; ems_var1<48; ems_var1++) {
 		ems_model_point[0] = ems_var1;
 		ems_model_point[1] = ems_var2;
 		ems_model_point[2] = 1;
@@ -254,8 +254,8 @@ int Evaluate_Model_Support (void) {
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
-	ems_var2 = -60;
-	for (ems_var1=-12; ems_var1>-48; ems_var1--) {
+	ems_var2 = 60;
+	for (ems_var1=12; ems_var1<48; ems_var1++) {
 		ems_model_point[0] = ems_var1;
 		ems_model_point[1] = ems_var2;
 		ems_model_point[2] = 1;
@@ -265,8 +265,8 @@ int Evaluate_Model_Support (void) {
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
-	ems_var2 = -81;
-	for (ems_var1=-12; ems_var1>-48; ems_var1--) {
+	ems_var2 = 81;
+	for (ems_var1=12; ems_var1<48; ems_var1++) {
 		ems_model_point[0] = ems_var1;
 		ems_model_point[1] = ems_var2;
 		ems_model_point[2] = 1;
@@ -276,8 +276,8 @@ int Evaluate_Model_Support (void) {
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
-	ems_var2 = -99;
-	for (ems_var1=-12; ems_var1>-48; ems_var1--) {
+	ems_var2 = 99;
+	for (ems_var1=12; ems_var1<48; ems_var1++) {
 		ems_model_point[0] = ems_var1;
 		ems_model_point[1] = ems_var2;
 		ems_model_point[2] = 1;
@@ -287,8 +287,8 @@ int Evaluate_Model_Support (void) {
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
-	ems_var1 = -48;
-	for (ems_var2=-21; ems_var2>-99; ems_var2--) {
+	ems_var1 = 12;
+	for (ems_var2=21; ems_var2<99; ems_var2++) {
 		ems_model_point[0] = ems_var1;
 		ems_model_point[1] = ems_var2;
 		ems_model_point[2] = 1;
@@ -298,8 +298,8 @@ int Evaluate_Model_Support (void) {
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
-	ems_var1 = -43.5;
-	for (ems_var2=-21; ems_var2>-99; ems_var2--) {
+	ems_var1 = 16.5;
+	for (ems_var2=21; ems_var2<99; ems_var2++) {
 		ems_model_point[0] = ems_var1;
 		ems_model_point[1] = ems_var2;
 		ems_model_point[2] = 1;
@@ -309,8 +309,8 @@ int Evaluate_Model_Support (void) {
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
-	ems_var1 = -30;
-	for (ems_var2=-21; ems_var2>-99; ems_var2--) {
+	ems_var1 = 30;
+	for (ems_var2=21; ems_var2<99; ems_var2++) {
 		ems_model_point[0] = ems_var1;
 		ems_model_point[1] = ems_var2;
 		ems_model_point[2] = 1;
@@ -320,8 +320,8 @@ int Evaluate_Model_Support (void) {
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
-	ems_var1 = -16.5;
-	for (ems_var2=-21; ems_var2>-99; ems_var2--) {
+	ems_var1 = 43.5;
+	for (ems_var2=21; ems_var2<99; ems_var2++) {
 		ems_model_point[0] = ems_var1;
 		ems_model_point[1] = ems_var2;
 		ems_model_point[2] = 1;
@@ -331,8 +331,8 @@ int Evaluate_Model_Support (void) {
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
-	ems_var1 = -12;
-	for (ems_var2=-21; ems_var2>-99; ems_var2--) {
+	ems_var1 = 48;
+	for (ems_var2=21; ems_var2<99; ems_var2++) {
 		ems_model_point[0] = ems_var1;
 		ems_model_point[1] = ems_var2;
 		ems_model_point[2] = 1;
@@ -366,10 +366,10 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 	double fmti_matrix_5[3][3] = {0.0};
 	double fmti_f2, fmti_b2_nr, fmti_b2_dr, fmti_b2;
 	
-	Left_Border_Center.x = TODO_FROM_KEVIN;
-	Left_Border_Center.y = TODO_FROM_KEVIN;
-	Top_Border_Center.x = TODO_FROM_KEVIN;
-	Top_Border_Center.y = TODO_FROM_KEVIN;
+	Left_Border_Center.x = 0;
+	Left_Border_Center.y = 176;
+	Top_Border_Center.x = 320;
+	Top_Border_Center.y = 0;
 	Build_Model_Data_Structure();
 	Build_Image_Data_Structure(FMTI_Image_Lines);
 	
