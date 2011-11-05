@@ -37,6 +37,6 @@ Mat calculateGradients(IplImage* src, IplImage* res, IplImage* wPixels);
 
 #define PI 3.14159265
 
-IplImage* lineImage;
+extern IplImage* lineImage;
 
 #endif

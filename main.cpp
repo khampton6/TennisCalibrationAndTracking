@@ -12,6 +12,8 @@
 using namespace std;
 using namespace cv;
 
+IplImage* lineImage;
+
 int main(int argc, char** argv) {
   
   const char* movie = "trimmed.avi";
