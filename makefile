@@ -6,13 +6,19 @@ CXXFLAGS = -g -bind_at_load `pkg-config --cflags opencv`
 LFLAGS = `pkg-config --libs opencv`
 
 
-SRC = main.cpp LinePrediction.cpp ModelFitting.cpp
+SRC = main.cpp LinePrediction.cpp ModelFitting.cpp Player.cpp
+SRC2 = Player.cpp
 
 OBJS = $(SRC:.cpp=.o)
+PlayerOBJS = $(SRC2:.cpp=.o)
+
+all: demo
 
 demo: $(OBJS)                                                              
 	$(CXX) $(CXXFLAGS) $(LFLAGS) $(OBJS) -o $@
-all: demo
+
+player: $(PlayerOBJS)
+	$(CXX) $(CXXFLAGS) $(LFLAGS) $(PlayerOBJS) -o $@
 
 clean:
-	rm -f $(OBJS) demo
+	rm -f $(OBJS) demo $(PlayerOBJS) player

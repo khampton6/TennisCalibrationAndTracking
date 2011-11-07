@@ -22,18 +22,11 @@
 using namespace std;
 using namespace cv;
 
-//typedef struct Line {
-//  double nx;
-//  double ny;
-//  double d;
-//  struct Line* next;
-//} Line;
-
-void whitePixelExtraction(IplImage* frame, SparseMat sparseMat);
+IplImage* whitePixelExtraction(IplImage* frame, IplImage* dst);
 void getPixelAt(IplImage* img, int x, int y, int* rgb[3]);
 Line* houghDetectLines(IplImage* src);
 double luminance(IplImage* image, int x, int y);
-Mat calculateGradients(IplImage* src, IplImage* res, IplImage* wPixels);
+Mat calculateGradients(IplImage* src, IplImage* wPixels);
 
 #define PI 3.14159265
 

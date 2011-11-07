@@ -112,7 +112,7 @@ Line* houghDetectLines(IplImage* src) {
     currLine->ny = vl[5];
     currLine->d  = vl[6];
     currLine->next = NULL;
-    printf ("X0: %10.6lf, Y0: %10.6lf, X1: %10.6lf, Y1: %10.6lf, NX: %10.6lf, NY: %10.6lf, D: %10.6lf\n", vl[0], vl[1], vl[2], vl[3], vl[4], vl[5], vl[6]);
+//    printf ("X0: %10.6lf, Y0: %10.6lf, X1: %10.6lf, Y1: %10.6lf, NX: %10.6lf, NY: %10.6lf, D: %10.6lf\n", vl[0], vl[1], vl[2], vl[3], vl[4], vl[5], vl[6]);
     if (prevLine != NULL) {
     	prevLine->next = currLine;
     } else {
@@ -123,15 +123,14 @@ Line* houghDetectLines(IplImage* src) {
   return head;
 }
 
-void whitePixelExtraction(IplImage* frame, SparseMat sparseMat) {
-  sparseMat.clear();
+IplImage* whitePixelExtraction(IplImage* frame, IplImage* dst) {
   
   double thetal = 128;
   double thetad = 20;
   int dist = 3;
   
-  for(int j = dist; j < frame->height-dist; j++) {
-    for(int i = dist; i < frame->width-dist; i++) {
+  for(int j = 25; j < frame->height-25; j++) {
+    for(int i = 25; i < frame->width-25; i++) {
       double lum = luminance(frame, i, j);
       int value = 0;
       
@@ -146,9 +145,10 @@ void whitePixelExtraction(IplImage* frame, SparseMat sparseMat) {
       else {
         value=0;
       }
-      sparseMat.ref<uchar>(j,i) = value*255;
+      ((uchar *)(dst->imageData + j*dst->widthStep))[i]=value*255;
     }
   }
+  return dst;
 }
 
 double luminance(IplImage* src, int j, int i) {
@@ -165,9 +165,8 @@ double luminance(IplImage* src, int j, int i) {
   return res;
 }
 
-Mat calculateGradients(IplImage* src, IplImage* res, IplImage* whitePixels) {
+Mat calculateGradients(IplImage* src, IplImage* whitePixels) {
   IplImage* blur_src = cvCreateImage(cvGetSize(src), IPL_DEPTH_8U, 1);
-  res = cvCreateImage(cvGetSize(src), IPL_DEPTH_32F, 1);
   cvSmooth(src,blur_src);
   
   Mat m(whitePixels);

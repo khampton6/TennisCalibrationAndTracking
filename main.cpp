@@ -8,6 +8,7 @@
 
 #include "LinePrediction.h"
 #include "ModelFitting.h"
+#include "Player.h"
 
 using namespace std;
 using namespace cv;
@@ -25,38 +26,46 @@ int main(int argc, char** argv) {
   
   CvCapture* capture = cvCaptureFromAVI(movie);
   IplImage* image = 0;
+  IplImage* prevFrame = 0, *currFrame = 0;
+
+  cvNamedWindow("White Ps", CV_WINDOW_AUTOSIZE);
   
   //Grabbing first frame
   image = cvQueryFrame(capture);
+  prevFrame = cvCreateImage(cvGetSize(image), IPL_DEPTH_8U, 1);
   if(!image) {
     cout << "Unable to parse video: " << movie << endl;
     return 0;
   }
   
-  cout << image->height << " " << image->width << endl;
-  
-  int mat_dims[2] = {image->height, image->width};
-  SparseMat smat = SparseMat(2, mat_dims, CV_8UC1);
+  IplImage* smat = cvCreateImage(cvGetSize(image), IPL_DEPTH_8U, 1);
   whitePixelExtraction(image, smat);
   
-  Mat m;
-  smat.convertTo(m, CV_8UC1);
-  IplImage i = m;
-  
-  IplImage* res;
-  Mat grads = calculateGradients(&i,res, &i);  
-  
-  IplImage j = grads;
-  
-  Line* Image_Lines_From_Kevin = houghDetectLines(&j);
-  
-  myLine = Image_Lines_From_Kevin;
-  while (myLine != NULL) {
-  	//printf ("NX: %lf, NY: %lf, D: %lf\n", myLine->nx, myLine->ny, myLine->d);
-	myLine = myLine->next;
+  IplImage* res = cvCloneImage(smat);
+  calculateGradients(smat, res);  
+
+  Line* Image_Lines_From_Kevin = houghDetectLines(res);
+  cvShowImage("White Ps", res);
+    
+ // myLine = Image_Lines_From_Kevin;
+  //Fit_Model_To_Image(Image_Lines_From_Kevin);
+
+  while(image && prevFrame) {
+    prevFrame = cvCloneImage(image);
+    image = cvQueryFrame(capture);
+    if(!image || !prevFrame)
+      break;
+    char c = cvWaitKey(33);
+    if(c == 27)
+      break;
+    
+    IplImage* smat = cvCreateImage(cvGetSize(image), IPL_DEPTH_8U, 1);
+    whitePixelExtraction(image, smat);
+
+    currFrame = smat;
+        
+    track(prevFrame, image);
   }
-  printf ("\n");
-  
-  Fit_Model_To_Image(Image_Lines_From_Kevin);
+
   return(0);
 }
