@@ -9,6 +9,7 @@ int best_match_count = 0;
 CourtLines CModel;
 CourtLines CImage;
 int image_hor_line_count = 0, image_ver_line_count = 0;
+int best_var1, best_var2, best_var3, best_var4, best_var5, best_var6, best_var7,best_var8;
 
 CvPoint2D64f Left_Border_Center, Top_Border_Center;
 CvMat matrix_1, matrix_2, matrix_3, matrix_4, matrix_5, matrix_6;
@@ -244,9 +245,12 @@ int Compute_Matching_Score (double * cms_image_point) {
    -1 if not on line
    0 if outside image boundary
    */
-  int j = (int)cms_image_point[0];
-  int i = (int)cms_image_point[1];
+  int j = (int) round(cms_image_point[0]);
+  int i = (int) round(cms_image_point[1]);
  
+  if( (j < 0) || (j >= lineImage->width) || (i < 0) || (i >= lineImage->height)) {
+    return 0;
+  }
 	if(lineImage == NULL)
 		std::cout << "Blah" << endl;
 
@@ -256,10 +260,7 @@ int Compute_Matching_Score (double * cms_image_point) {
 	int green = ((uchar *)(lineImage->imageData + i*lineImage->widthStep))[j*lineImage->nChannels + 1];
 	int blue = ((uchar *)(lineImage->imageData + i*lineImage->widthStep))[j*lineImage->nChannels + 0];
   
-  if(j < lineImage->width || i < lineImage->height) {
-    return 0;
-  }
-  else if(red > 200) {
+  if(red > 200) {
     return 2;
   }
   else {
@@ -270,6 +271,7 @@ int Compute_Matching_Score (double * cms_image_point) {
 int Evaluate_Model_Support (void) {
 	int ems_matching_score = 0;
 	int ems_var1, ems_var2;
+	int did_best_match_happen = 0;
 	double ems_model_point[3], ems_image_point[3];
 	CvMat ems_model_matrix, ems_image_matrix;
 	
@@ -423,7 +425,12 @@ int Evaluate_Model_Support (void) {
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
+	if (ems_matching_score == best_matching_score) {
+		best_match_count++;
+	}
 	if (ems_matching_score > best_matching_score) {
+		did_best_match_happen = 1;
+		best_match_count = 1;
 		best_matching_score = ems_matching_score;
 		for (ems_var1=0; ems_var1<3; ems_var1++) {
 			for (ems_var2=0; ems_var2<3; ems_var2++) {
@@ -431,11 +438,8 @@ int Evaluate_Model_Support (void) {
 			}
 		}
 	}
-	if (ems_matching_score == best_matching_score) {
-		best_match_count++;
-	}
 	
-	return (0);
+	return (did_best_match_happen);
 }
 
 int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
@@ -569,37 +573,37 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 					fmti_matrix_1[7][6] = -(image_point_4.x)*(model_point_4.y);
 					fmti_matrix_1[7][7] = -(image_point_4.y)*(model_point_4.y);
 
-					printf ("model_point_1.x:%10.6lf, model_point_1.y:%10.6lf\n", model_point_1.x, model_point_1.y);
-					printf ("image_point_1.x:%10.6lf, image_point_1.y:%10.6lf\n", image_point_1.x, image_point_1.y);
-					printf ("model_point_2.x:%10.6lf, model_point_2.y:%10.6lf\n", model_point_2.x, model_point_2.y);
-					printf ("image_point_2.x:%10.6lf, image_point_2.y:%10.6lf\n", image_point_2.x, image_point_2.y);
-					printf ("model_point_3.x:%10.6lf, model_point_3.y:%10.6lf\n", model_point_3.x, model_point_3.y);
-					printf ("image_point_3.x:%10.6lf, image_point_3.y:%10.6lf\n", image_point_3.x, image_point_3.y);
-					printf ("model_point_4.x:%10.6lf, model_point_4.y:%10.6lf\n", model_point_4.x, model_point_4.y);
-					printf ("image_point_4.x:%10.6lf, image_point_4.y:%10.6lf\n", image_point_4.x, image_point_4.y);
-					for (temp_var_1=0; temp_var_1<8; temp_var_1++) {
-						temp_var_2=0;
-						printf ("%lf", fmti_matrix_1[temp_var_1][temp_var_2]);
-						for (temp_var_2=1; temp_var_2<8; temp_var_2++) {
-							printf (" %lf", fmti_matrix_1[temp_var_1][temp_var_2]);
-						}
-						printf ("\n");
-					}
-					printf ("\n");
+// 					printf ("model_point_1.x:%10.6lf, model_point_1.y:%10.6lf\n", model_point_1.x, model_point_1.y);
+// 					printf ("image_point_1.x:%10.6lf, image_point_1.y:%10.6lf\n", image_point_1.x, image_point_1.y);
+// 					printf ("model_point_2.x:%10.6lf, model_point_2.y:%10.6lf\n", model_point_2.x, model_point_2.y);
+// 					printf ("image_point_2.x:%10.6lf, image_point_2.y:%10.6lf\n", image_point_2.x, image_point_2.y);
+// 					printf ("model_point_3.x:%10.6lf, model_point_3.y:%10.6lf\n", model_point_3.x, model_point_3.y);
+// 					printf ("image_point_3.x:%10.6lf, image_point_3.y:%10.6lf\n", image_point_3.x, image_point_3.y);
+// 					printf ("model_point_4.x:%10.6lf, model_point_4.y:%10.6lf\n", model_point_4.x, model_point_4.y);
+// 					printf ("image_point_4.x:%10.6lf, image_point_4.y:%10.6lf\n", image_point_4.x, image_point_4.y);
+// 					for (temp_var_1=0; temp_var_1<8; temp_var_1++) {
+// 						temp_var_2=0;
+// 						printf ("%lf", fmti_matrix_1[temp_var_1][temp_var_2]);
+// 						for (temp_var_2=1; temp_var_2<8; temp_var_2++) {
+// 							printf (" %lf", fmti_matrix_1[temp_var_1][temp_var_2]);
+// 						}
+// 						printf ("\n");
+// 					}
+// 					printf ("\n");
 					
 					//cvInitMatHeader(&matrix_1, 8, 8, CV_64FC1, fmti_matrix_1, 8*sizeof(double));
 					matrix_1 = cvMat(8, 8, CV_64FC1, fmti_matrix_1);
 					matrix_4 = cvMat(8, 8, CV_64FC1, fmti_matrix_4);
 					cvInv(&matrix_1, &matrix_4, CV_LU);
-					for (temp_var_1=0,temp_var_2=0; temp_var_1<8; temp_var_1++) {
-						temp_var_2=0;
-						printf ("%lf", fmti_matrix_4[temp_var_1][temp_var_2]);
-						for (temp_var_2=1; temp_var_2<8; temp_var_2++) {
-							printf (" %lf", fmti_matrix_4[temp_var_1][temp_var_2]);
-						}
-						printf ("\n");
-					}
-					printf ("\n");
+// 					for (temp_var_1=0,temp_var_2=0; temp_var_1<8; temp_var_1++) {
+// 						temp_var_2=0;
+// 						printf ("%lf", fmti_matrix_4[temp_var_1][temp_var_2]);
+// 						for (temp_var_2=1; temp_var_2<8; temp_var_2++) {
+// 							printf (" %lf", fmti_matrix_4[temp_var_1][temp_var_2]);
+// 						}
+// 						printf ("\n");
+// 					}
+// 					printf ("\n");
 					
 					fmti_matrix_2[0] = model_point_1.x;
 					fmti_matrix_2[1] = model_point_1.y;
@@ -623,17 +627,17 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 					calib_params[2][1] = fmti_matrix_3[7];
 					calib_params[2][2] = 1.0;
 					
-					printf ("%10.6lf %10.6lf %10.6lf\n", calib_params[0][0], calib_params[0][1], calib_params[0][2]);
-					printf ("%10.6lf %10.6lf %10.6lf\n", calib_params[1][0], calib_params[1][1], calib_params[1][2]);
-					printf ("%10.6lf %10.6lf %10.6lf\n", calib_params[2][0], calib_params[2][1], calib_params[2][2]);
-					printf ("\n");
+// 					printf ("%10.6lf %10.6lf %10.6lf\n", calib_params[0][0], calib_params[0][1], calib_params[0][2]);
+// 					printf ("%10.6lf %10.6lf %10.6lf\n", calib_params[1][0], calib_params[1][1], calib_params[1][2]);
+// 					printf ("%10.6lf %10.6lf %10.6lf\n", calib_params[2][0], calib_params[2][1], calib_params[2][2]);
+// 					printf ("\n");
 					
 					matrix_5 = cvMat(3, 3, CV_64FC1, fmti_matrix_5);
 					matrix_6 = cvMat(3, 3, CV_64FC1, calib_params);
 					cvInv(&matrix_6, &matrix_5, CV_LU);
-					printf ("%10.6lf %10.6lf %10.6lf\n", fmti_matrix_5[0][0], fmti_matrix_5[0][1], fmti_matrix_5[0][2]);
-					printf ("%10.6lf %10.6lf %10.6lf\n", fmti_matrix_5[1][0], fmti_matrix_5[1][1], fmti_matrix_5[1][2]);
-					printf ("%10.6lf %10.6lf %10.6lf\n", fmti_matrix_5[2][0], fmti_matrix_5[2][1], fmti_matrix_5[2][2]);
+// 					printf ("%10.6lf %10.6lf %10.6lf\n", fmti_matrix_5[0][0], fmti_matrix_5[0][1], fmti_matrix_5[0][2]);
+// 					printf ("%10.6lf %10.6lf %10.6lf\n", fmti_matrix_5[1][0], fmti_matrix_5[1][1], fmti_matrix_5[1][2]);
+// 					printf ("%10.6lf %10.6lf %10.6lf\n", fmti_matrix_5[2][0], fmti_matrix_5[2][1], fmti_matrix_5[2][2]);
 					
 // 					fmti_f2 = -((fmti_matrix_5[0][0])*(fmti_matrix_5[0][1])+(fmti_matrix_5[1][0])*(fmti_matrix_5[1][1]));
 // 					fmti_f2 /= ((fmti_matrix_5[2][0])*(fmti_matrix_5[2][1]));
@@ -652,7 +656,25 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 // 					}
 
 					//return (0);
-					Evaluate_Model_Support();
+					if (Evaluate_Model_Support()) {
+						best_var1 = fmti_var1;
+						best_var2 = fmti_var2;
+						best_var3 = fmti_var3;
+						best_var4 = fmti_var4;
+						best_var5 = fmti_var5;
+						best_var6 = fmti_var6;
+						best_var7 = fmti_var7;
+						best_var8 = fmti_var8;
+// 	if (best_matching_score > 200) {
+// 	printf ("Best matching score: %d\n", best_matching_score);
+// 	printf ("Best matching count: %d\n", best_match_count);
+// 	printf ("%10.6lf, %10.6lf, %10.6lf\n", best_calib_params[0][0], best_calib_params[0][1], best_calib_params[0][2]);
+// 	printf ("%10.6lf, %10.6lf, %10.6lf\n", best_calib_params[1][0], best_calib_params[1][1], best_calib_params[1][2]);
+// 	printf ("%10.6lf, %10.6lf, %10.6lf\n", best_calib_params[2][0], best_calib_params[2][1], best_calib_params[2][2]);
+// 	printf ("best_var1: %d, best_var2: %d, best_var3: %d, best_var4: %d\n", best_var1, best_var2, best_var3, best_var4);
+// 	printf ("best_var5: %d, best_var6: %d, best_var7: %d, best_var8: %d\n", best_var5, best_var6, best_var7, best_var8);
+// 	}
+					}
 				}
 			}
 		}
@@ -666,7 +688,9 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 	printf ("Best matching count: %d\n", best_match_count);
 	printf ("%10.6lf, %10.6lf, %10.6lf\n", best_calib_params[0][0], best_calib_params[0][1], best_calib_params[0][2]);
 	printf ("%10.6lf, %10.6lf, %10.6lf\n", best_calib_params[1][0], best_calib_params[1][1], best_calib_params[1][2]);
-	printf ("%10.6lf, %10.6lf, %10.6lf\n", best_calib_params[2][0], best_calib_params[2][1], best_calib_params[2][2]); 
+	printf ("%10.6lf, %10.6lf, %10.6lf\n", best_calib_params[2][0], best_calib_params[2][1], best_calib_params[2][2]);
+	printf ("best_var1: %d, best_var2: %d, best_var3: %d, best_var4: %d\n", best_var1, best_var2, best_var3, best_var4);
+	printf ("best_var5: %d, best_var6: %d, best_var7: %d, best_var8: %d\n", best_var5, best_var6, best_var7, best_var8);
 
 	return (0);
 }
