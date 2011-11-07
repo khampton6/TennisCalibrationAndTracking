@@ -271,9 +271,9 @@ int Evaluate_Model_Support (void) {
 		ems_model_point[2] = 1;
 		ems_model_matrix = cvMat(3, 1, CV_64FC1, ems_model_point);
 		ems_image_matrix = cvMat(3, 1, CV_64FC1, ems_image_point);
-		cvMatMul (&matrix_6, &ems_model_matrix, &ems_image_matrix);
-/* 		ems_image_point[0] = (ems_image_point[0])/(ems_image_point[2]);
-		ems_image_point[1] = (ems_image_point[1])/(ems_image_point[2]); */
+		cvMatMul (&matrix_5, &ems_model_matrix, &ems_image_matrix);
+		ems_image_point[0] = (ems_image_point[0])/(ems_image_point[2]);
+		ems_image_point[1] = (ems_image_point[1])/(ems_image_point[2]); 
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
@@ -284,7 +284,7 @@ int Evaluate_Model_Support (void) {
 		ems_model_point[2] = 1;
 		ems_model_matrix = cvMat(3, 1, CV_64FC1, ems_model_point);
 		ems_image_matrix = cvMat(3, 1, CV_64FC1, ems_image_point);
-		cvMatMul (&matrix_6, &ems_model_matrix, &ems_image_matrix);
+		cvMatMul (&matrix_5, &ems_model_matrix, &ems_image_matrix);
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
@@ -295,7 +295,7 @@ int Evaluate_Model_Support (void) {
 		ems_model_point[2] = 1;
 		ems_model_matrix = cvMat(3, 1, CV_64FC1, ems_model_point);
 		ems_image_matrix = cvMat(3, 1, CV_64FC1, ems_image_point);
-		cvMatMul (&matrix_6, &ems_model_matrix, &ems_image_matrix);
+		cvMatMul (&matrix_5, &ems_model_matrix, &ems_image_matrix);
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
@@ -306,7 +306,7 @@ int Evaluate_Model_Support (void) {
 		ems_model_point[2] = 1;
 		ems_model_matrix = cvMat(3, 1, CV_64FC1, ems_model_point);
 		ems_image_matrix = cvMat(3, 1, CV_64FC1, ems_image_point);
-		cvMatMul (&matrix_6, &ems_model_matrix, &ems_image_matrix);
+		cvMatMul (&matrix_5, &ems_model_matrix, &ems_image_matrix);
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
@@ -317,7 +317,7 @@ int Evaluate_Model_Support (void) {
 		ems_model_point[2] = 1;
 		ems_model_matrix = cvMat(3, 1, CV_64FC1, ems_model_point);
 		ems_image_matrix = cvMat(3, 1, CV_64FC1, ems_image_point);
-		cvMatMul (&matrix_6, &ems_model_matrix, &ems_image_matrix);
+		cvMatMul (&matrix_5, &ems_model_matrix, &ems_image_matrix);
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
@@ -328,7 +328,7 @@ int Evaluate_Model_Support (void) {
 		ems_model_point[2] = 1;
 		ems_model_matrix = cvMat(3, 1, CV_64FC1, ems_model_point);
 		ems_image_matrix = cvMat(3, 1, CV_64FC1, ems_image_point);
-		cvMatMul (&matrix_6, &ems_model_matrix, &ems_image_matrix);
+		cvMatMul (&matrix_5, &ems_model_matrix, &ems_image_matrix);
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
@@ -339,7 +339,7 @@ int Evaluate_Model_Support (void) {
 		ems_model_point[2] = 1;
 		ems_model_matrix = cvMat(3, 1, CV_64FC1, ems_model_point);
 		ems_image_matrix = cvMat(3, 1, CV_64FC1, ems_image_point);
-		cvMatMul (&matrix_6, &ems_model_matrix, &ems_image_matrix);
+		cvMatMul (&matrix_5, &ems_model_matrix, &ems_image_matrix);
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
@@ -350,7 +350,7 @@ int Evaluate_Model_Support (void) {
 		ems_model_point[2] = 1;
 		ems_model_matrix = cvMat(3, 1, CV_64FC1, ems_model_point);
 		ems_image_matrix = cvMat(3, 1, CV_64FC1, ems_image_point);
-		cvMatMul (&matrix_6, &ems_model_matrix, &ems_image_matrix);
+		cvMatMul (&matrix_5, &ems_model_matrix, &ems_image_matrix);
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
@@ -361,7 +361,7 @@ int Evaluate_Model_Support (void) {
 		ems_model_point[2] = 1;
 		ems_model_matrix = cvMat(3, 1, CV_64FC1, ems_model_point);
 		ems_image_matrix = cvMat(3, 1, CV_64FC1, ems_image_point);
-		cvMatMul (&matrix_6, &ems_model_matrix, &ems_image_matrix);
+		cvMatMul (&matrix_5, &ems_model_matrix, &ems_image_matrix);
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
@@ -372,7 +372,7 @@ int Evaluate_Model_Support (void) {
 		ems_model_point[2] = 1;
 		ems_model_matrix = cvMat(3, 1, CV_64FC1, ems_model_point);
 		ems_image_matrix = cvMat(3, 1, CV_64FC1, ems_image_point);
-		cvMatMul (&matrix_6, &ems_model_matrix, &ems_image_matrix);
+		cvMatMul (&matrix_5, &ems_model_matrix, &ems_image_matrix);
 		ems_matching_score += Compute_Matching_Score(ems_image_point);
 	}
 	
@@ -576,14 +576,18 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 					calib_params[2][1] = fmti_matrix_3[7];
 					calib_params[2][2] = 1.0;
 					
-					printf ("%10.6lf, %10.6lf, %10.6lf\n", calib_params[0][0], calib_params[0][1], calib_params[0][2]);
-					printf ("%10.6lf, %10.6lf, %10.6lf\n", calib_params[1][0], calib_params[1][1], calib_params[1][2]);
-					printf ("%10.6lf, %10.6lf, %10.6lf\n", calib_params[2][0], calib_params[2][1], calib_params[2][2]);
+					printf ("%10.6lf %10.6lf %10.6lf\n", calib_params[0][0], calib_params[0][1], calib_params[0][2]);
+					printf ("%10.6lf %10.6lf %10.6lf\n", calib_params[1][0], calib_params[1][1], calib_params[1][2]);
+					printf ("%10.6lf %10.6lf %10.6lf\n", calib_params[2][0], calib_params[2][1], calib_params[2][2]);
+					printf ("\n");
 					
-// 					matrix_5 = cvMat(3, 3, CV_64FC1, fmti_matrix_5);
-// 					cvInitMatHeader(&matrix_6, 3, 3, CV_64FC1, calib_params, 3*sizeof(double));
-// 					cvInv(&matrix_6, &matrix_5, CV_LU);
-// 					
+					matrix_5 = cvMat(3, 3, CV_64FC1, fmti_matrix_5);
+					matrix_6 = cvMat(3, 3, CV_64FC1, calib_params);
+					cvInv(&matrix_6, &matrix_5, CV_LU);
+					printf ("%10.6lf %10.6lf %10.6lf\n", fmti_matrix_5[0][0], fmti_matrix_5[0][1], fmti_matrix_5[0][2]);
+					printf ("%10.6lf %10.6lf %10.6lf\n", fmti_matrix_5[1][0], fmti_matrix_5[1][1], fmti_matrix_5[1][2]);
+					printf ("%10.6lf %10.6lf %10.6lf\n", fmti_matrix_5[2][0], fmti_matrix_5[2][1], fmti_matrix_5[2][2]);
+					
 // 					fmti_f2 = -((fmti_matrix_5[0][0])*(fmti_matrix_5[0][1])+(fmti_matrix_5[1][0])*(fmti_matrix_5[1][1]));
 // 					fmti_f2 /= ((fmti_matrix_5[2][0])*(fmti_matrix_5[2][1]));
 // 					
@@ -600,7 +604,7 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 // 						continue;
 // 					}
 
-					return (0);
+					//return (0);
 					Evaluate_Model_Support();
 				}
 			}
