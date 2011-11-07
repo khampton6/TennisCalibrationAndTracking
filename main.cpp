@@ -41,11 +41,11 @@ int main(int argc, char** argv) {
   IplImage* smat = cvCreateImage(cvGetSize(image), IPL_DEPTH_8U, 1);
   whitePixelExtraction(image, smat);
   
-  IplImage* res = cvCloneImage(smat);
-  calculateGradients(smat, res);  
+  IplImage* lineImage = cvCloneImage(smat);
+  calculateGradients(smat, lineImage);  
 
-  Line* Image_Lines_From_Kevin = houghDetectLines(res);
-  cvShowImage("White Ps", res);
+  Line* Image_Lines_From_Kevin = houghDetectLines(lineImage);
+  cvShowImage("White Ps", lineImage);
     
  // myLine = Image_Lines_From_Kevin;
   //Fit_Model_To_Image(Image_Lines_From_Kevin);
