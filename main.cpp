@@ -60,8 +60,9 @@ int main(int argc, char** argv) {
       break;
     
     IplImage* smat = cvCreateImage(cvGetSize(image), IPL_DEPTH_8U, 1);
-    whitePixelExtraction(image, smat);
-
+ 		cvSet(smat, cvScalar(0,0,0));
+ 		whitePixelExtraction(image, smat);
+		cvShowImage("White Ps", smat);
     currFrame = smat;
         
     track(prevFrame, image);
