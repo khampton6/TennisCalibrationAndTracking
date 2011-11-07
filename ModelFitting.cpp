@@ -219,6 +219,10 @@ int Compute_Intersection_Of_2Lines (CvPoint2D64f * cio2_point, Line * cio2_line_
 	cio2_var2 = -((cio2_line_1->nx)*(cio2_line_2->d) - (cio2_line_2->nx)*(cio2_line_1->d));
 	cio2_var3 = (cio2_line_1->nx)*(cio2_line_2->ny) - (cio2_line_2->nx)*(cio2_line_1->ny);
 	
+	//To account for (nx, ny, -d) representation of a line
+	cio2_var1 *= -1;
+	cio2_var2 *= -1;
+	
 	cio2_point->x = cio2_var1/cio2_var3;
 	cio2_point->y = cio2_var2/cio2_var3;
 	
@@ -452,8 +456,8 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 					fmti_matrix_1[0][3] = 0.0;
 					fmti_matrix_1[0][4] = 0.0;
 					fmti_matrix_1[0][5] = 0.0;
-					fmti_matrix_1[0][6] = (image_point_1.x)*(model_point_1.x);
-					fmti_matrix_1[0][7] = (image_point_1.y)*(model_point_1.x);
+					fmti_matrix_1[0][6] = -(image_point_1.x)*(model_point_1.x);
+					fmti_matrix_1[0][7] = -(image_point_1.y)*(model_point_1.x);
 					
 					fmti_matrix_1[1][0] = 0.0;
 					fmti_matrix_1[1][1] = 0.0;
@@ -461,8 +465,8 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 					fmti_matrix_1[1][3] = image_point_1.x;
 					fmti_matrix_1[1][4] = image_point_1.y;
 					fmti_matrix_1[1][5] = 1.0;
-					fmti_matrix_1[1][6] = (image_point_1.x)*(model_point_1.y);
-					fmti_matrix_1[1][7] = (image_point_1.y)*(model_point_1.y);
+					fmti_matrix_1[1][6] = -(image_point_1.x)*(model_point_1.y);
+					fmti_matrix_1[1][7] = -(image_point_1.y)*(model_point_1.y);
 					
 					fmti_matrix_1[2][0] = image_point_2.x;
 					fmti_matrix_1[2][1] = image_point_2.y;
@@ -470,8 +474,8 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 					fmti_matrix_1[2][3] = 0.0;
 					fmti_matrix_1[2][4] = 0.0;
 					fmti_matrix_1[2][5] = 0.0;
-					fmti_matrix_1[2][6] = (image_point_2.x)*(model_point_2.x);
-					fmti_matrix_1[2][7] = (image_point_2.y)*(model_point_2.x);
+					fmti_matrix_1[2][6] = -(image_point_2.x)*(model_point_2.x);
+					fmti_matrix_1[2][7] = -(image_point_2.y)*(model_point_2.x);
 					
 					fmti_matrix_1[3][0] = 0.0;
 					fmti_matrix_1[3][1] = 0.0;
@@ -479,8 +483,8 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 					fmti_matrix_1[3][3] = image_point_2.x;
 					fmti_matrix_1[3][4] = image_point_2.y;
 					fmti_matrix_1[3][5] = 1.0;
-					fmti_matrix_1[3][6] = (image_point_2.x)*(model_point_2.y);
-					fmti_matrix_1[3][7] = (image_point_2.y)*(model_point_2.y);
+					fmti_matrix_1[3][6] = -(image_point_2.x)*(model_point_2.y);
+					fmti_matrix_1[3][7] = -(image_point_2.y)*(model_point_2.y);
 					
 					fmti_matrix_1[4][0] = image_point_3.x;
 					fmti_matrix_1[4][1] = image_point_3.y;
@@ -488,8 +492,8 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 					fmti_matrix_1[4][3] = 0.0;
 					fmti_matrix_1[4][4] = 0.0;
 					fmti_matrix_1[4][5] = 0.0;
-					fmti_matrix_1[4][6] = (image_point_3.x)*(model_point_3.x);
-					fmti_matrix_1[4][7] = (image_point_3.y)*(model_point_3.x);
+					fmti_matrix_1[4][6] = -(image_point_3.x)*(model_point_3.x);
+					fmti_matrix_1[4][7] = -(image_point_3.y)*(model_point_3.x);
 					
 					fmti_matrix_1[5][0] = 0.0;
 					fmti_matrix_1[5][1] = 0.0;
@@ -497,8 +501,8 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 					fmti_matrix_1[5][3] = image_point_3.x;
 					fmti_matrix_1[5][4] = image_point_3.y;
 					fmti_matrix_1[5][5] = 1.0;
-					fmti_matrix_1[5][6] = (image_point_3.x)*(model_point_3.y);
-					fmti_matrix_1[5][7] = (image_point_3.y)*(model_point_3.y);
+					fmti_matrix_1[5][6] = -(image_point_3.x)*(model_point_3.y);
+					fmti_matrix_1[5][7] = -(image_point_3.y)*(model_point_3.y);
 					
 					fmti_matrix_1[6][0] = image_point_4.x;
 					fmti_matrix_1[6][1] = image_point_4.y;
@@ -506,8 +510,8 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 					fmti_matrix_1[6][3] = 0.0;
 					fmti_matrix_1[6][4] = 0.0;
 					fmti_matrix_1[6][5] = 0.0;
-					fmti_matrix_1[6][6] = (image_point_4.x)*(model_point_4.x);
-					fmti_matrix_1[6][7] = (image_point_4.y)*(model_point_4.x);
+					fmti_matrix_1[6][6] = -(image_point_4.x)*(model_point_4.x);
+					fmti_matrix_1[6][7] = -(image_point_4.y)*(model_point_4.x);
 					
 					fmti_matrix_1[7][0] = 0.0;
 					fmti_matrix_1[7][1] = 0.0;
@@ -515,17 +519,17 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 					fmti_matrix_1[7][3] = image_point_4.x;
 					fmti_matrix_1[7][4] = image_point_4.y;
 					fmti_matrix_1[7][5] = 1.0;
-					fmti_matrix_1[7][6] = (image_point_4.x)*(model_point_4.y);
-					fmti_matrix_1[7][7] = (image_point_4.y)*(model_point_4.y);
+					fmti_matrix_1[7][6] = -(image_point_4.x)*(model_point_4.y);
+					fmti_matrix_1[7][7] = -(image_point_4.y)*(model_point_4.y);
 
-					printf ("%10.6lf, %10.6lf\n", model_point_1.x, model_point_1.y);
-					printf ("%10.6lf, %10.6lf\n", image_point_1.x, image_point_1.y);
-					printf ("%10.6lf, %10.6lf\n", model_point_2.x, model_point_2.y);
-					printf ("%10.6lf, %10.6lf\n", image_point_2.x, image_point_2.y);
-					printf ("%10.6lf, %10.6lf\n", model_point_3.x, model_point_3.y);
-					printf ("%10.6lf, %10.6lf\n", image_point_3.x, image_point_3.y);
-					printf ("%10.6lf, %10.6lf\n", model_point_4.x, model_point_4.y);
-					printf ("%10.6lf, %10.6lf\n", image_point_4.x, image_point_4.y);
+					printf ("model_point_1.x:%10.6lf, model_point_1.y:%10.6lf\n", model_point_1.x, model_point_1.y);
+					printf ("image_point_1.x:%10.6lf, image_point_1.y:%10.6lf\n", image_point_1.x, image_point_1.y);
+					printf ("model_point_2.x:%10.6lf, model_point_2.y:%10.6lf\n", model_point_2.x, model_point_2.y);
+					printf ("image_point_2.x:%10.6lf, image_point_2.y:%10.6lf\n", image_point_2.x, image_point_2.y);
+					printf ("model_point_3.x:%10.6lf, model_point_3.y:%10.6lf\n", model_point_3.x, model_point_3.y);
+					printf ("image_point_3.x:%10.6lf, image_point_3.y:%10.6lf\n", image_point_3.x, image_point_3.y);
+					printf ("model_point_4.x:%10.6lf, model_point_4.y:%10.6lf\n", model_point_4.x, model_point_4.y);
+					printf ("image_point_4.x:%10.6lf, image_point_4.y:%10.6lf\n", image_point_4.x, image_point_4.y);
 					for (temp_var_1=0; temp_var_1<8; temp_var_1++) {
 						temp_var_2=0;
 						printf ("%lf", fmti_matrix_1[temp_var_1][temp_var_2]);
@@ -575,28 +579,28 @@ int Fit_Model_To_Image (Line * FMTI_Image_Lines) {
 					printf ("%10.6lf, %10.6lf, %10.6lf\n", calib_params[0][0], calib_params[0][1], calib_params[0][2]);
 					printf ("%10.6lf, %10.6lf, %10.6lf\n", calib_params[1][0], calib_params[1][1], calib_params[1][2]);
 					printf ("%10.6lf, %10.6lf, %10.6lf\n", calib_params[2][0], calib_params[2][1], calib_params[2][2]);
+					
+// 					matrix_5 = cvMat(3, 3, CV_64FC1, fmti_matrix_5);
+// 					cvInitMatHeader(&matrix_6, 3, 3, CV_64FC1, calib_params, 3*sizeof(double));
+// 					cvInv(&matrix_6, &matrix_5, CV_LU);
+// 					
+// 					fmti_f2 = -((fmti_matrix_5[0][0])*(fmti_matrix_5[0][1])+(fmti_matrix_5[1][0])*(fmti_matrix_5[1][1]));
+// 					fmti_f2 /= ((fmti_matrix_5[2][0])*(fmti_matrix_5[2][1]));
+// 					
+// 					fmti_b2_nr = (fmti_matrix_5[0][1])*(fmti_matrix_5[0][1]);
+// 					fmti_b2_nr += (fmti_matrix_5[1][1])*(fmti_matrix_5[1][1]);
+// 					fmti_b2_nr += (fmti_f2)*(fmti_matrix_5[2][1])*(fmti_matrix_5[2][1]);
+// 					
+// 					fmti_b2_dr = (fmti_matrix_5[0][0])*(fmti_matrix_5[0][0]);
+// 					fmti_b2_dr += (fmti_matrix_5[1][0])*(fmti_matrix_5[1][0]);
+// 					fmti_b2_dr += (fmti_f2)*(fmti_matrix_5[2][0])*(fmti_matrix_5[2][0]);
+// 					fmti_b2 = fmti_b2_nr/fmti_b2_dr;
+// 					
+// 					if ((fmti_b2<=0.5) || (fmti_b2>=2)) {
+// 						continue;
+// 					}
+
 					return (0);
-					
-					matrix_5 = cvMat(3, 3, CV_64FC1, fmti_matrix_5);
-					cvInitMatHeader(&matrix_6, 3, 3, CV_64FC1, calib_params, 3*sizeof(double));
-					cvInv(&matrix_6, &matrix_5, CV_LU);
-					
-					fmti_f2 = -((fmti_matrix_5[0][0])*(fmti_matrix_5[0][1])+(fmti_matrix_5[1][0])*(fmti_matrix_5[1][1]));
-					fmti_f2 /= ((fmti_matrix_5[2][0])*(fmti_matrix_5[2][1]));
-					
-					fmti_b2_nr = (fmti_matrix_5[0][1])*(fmti_matrix_5[0][1]);
-					fmti_b2_nr += (fmti_matrix_5[1][1])*(fmti_matrix_5[1][1]);
-					fmti_b2_nr += (fmti_f2)*(fmti_matrix_5[2][1])*(fmti_matrix_5[2][1]);
-					
-					fmti_b2_dr = (fmti_matrix_5[0][0])*(fmti_matrix_5[0][0]);
-					fmti_b2_dr += (fmti_matrix_5[1][0])*(fmti_matrix_5[1][0]);
-					fmti_b2_dr += (fmti_f2)*(fmti_matrix_5[2][0])*(fmti_matrix_5[2][0]);
-					fmti_b2 = fmti_b2_nr/fmti_b2_dr;
-					
-					if ((fmti_b2<=0.5) || (fmti_b2>=2)) {
-						continue;
-					}
-					//printf ("HERE\n");
 					Evaluate_Model_Support();
 				}
 			}
