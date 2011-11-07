@@ -41,8 +41,10 @@ int main(int argc, char** argv) {
   IplImage* smat = cvCreateImage(cvGetSize(image), IPL_DEPTH_8U, 1);
   whitePixelExtraction(image, smat);
   
-  IplImage* lineImage = cvCloneImage(smat);
+  lineImage = cvCloneImage(smat);
   calculateGradients(smat, lineImage);  
+	//double pts[2] = {lineImage->width-1, lineImage->height-1};
+	//Compute_Matching_Score (pts);
 
   Line* Image_Lines_From_Kevin = houghDetectLines(lineImage);
   cvShowImage("White Ps", lineImage);

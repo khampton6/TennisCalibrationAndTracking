@@ -37,6 +37,7 @@ typedef struct CourtLines {
 	Line * ver;
 } CourtLines;
 
+void setLineImage(IplImage*);
 int Fit_Model_To_Image (Line *);
 int Build_Model_Data_Structure (void);
 int Build_Image_Data_Structure (Line *);

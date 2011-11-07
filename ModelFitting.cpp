@@ -15,6 +15,12 @@ CvMat matrix_1, matrix_2, matrix_3, matrix_4, matrix_5, matrix_6;
 Line ** Model_Hor_Line_Array, ** Model_Ver_Line_Array;
 Line ** Image_Hor_Line_Array, ** Image_Ver_Line_Array;
 
+//IplImage* lineImage;
+
+void setLineImage(IplImage* line) {
+	lineImage = line;
+}
+
 //int main(int argc, char * argv[]) {
 //	//Build model data structure
 //	//Obtain image data structure
@@ -240,7 +246,10 @@ int Compute_Matching_Score (double * cms_image_point) {
    */
   int j = (int)cms_image_point[0];
   int i = (int)cms_image_point[1];
-  
+ 
+	if(lineImage == NULL)
+		std::cout << "Blah" << endl;
+
   float* data = (float *)lineImage->imageData;
   
 	int red = ((uchar *)(lineImage->imageData + i*lineImage->widthStep))[j*lineImage->nChannels + 2];
