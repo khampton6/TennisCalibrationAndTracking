@@ -112,7 +112,6 @@ Line* houghDetectLines(IplImage* src) {
     currLine->ny = vl[5];
     currLine->d  = vl[6];
     currLine->next = NULL;
-//    printf ("X0: %10.6lf, Y0: %10.6lf, X1: %10.6lf, Y1: %10.6lf, NX: %10.6lf, NY: %10.6lf, D: %10.6lf\n", vl[0], vl[1], vl[2], vl[3], vl[4], vl[5], vl[6]);
     if (prevLine != NULL) {
     	prevLine->next = currLine;
     } else {

@@ -43,15 +43,10 @@ int main(int argc, char** argv) {
   
   lineImage = cvCloneImage(smat);
   calculateGradients(smat, lineImage);  
-	//double pts[2] = {lineImage->width-1, lineImage->height-1};
-	//Compute_Matching_Score (pts);
 
   Line* Image_Lines_From_Kevin = houghDetectLines(lineImage);
   cvShowImage("White Ps", lineImage);
     
- // myLine = Image_Lines_From_Kevin;
-  //Fit_Model_To_Image(Image_Lines_From_Kevin);
-
   while(image && prevFrame) {
     prevFrame = cvCloneImage(image);
     image = cvQueryFrame(capture);

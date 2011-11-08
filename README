@@ -1,0 +1,17 @@
+Hello,
+
+Libraries
+We used OpenCV in our projct to do video parsing, hough line detection, Matrix operations, etc.
+
+Source Files
+main.cpp
+LinePrediction.cpp and .h <- Does white pixel detection and line prediction
+ModelFitting.cpp and .h <- Does Model fitting
+Player.cpp and .h <- Does background subtraction and Tracking
+
+
+Compiling and Running
+Our makefile uses pkg-config to link to the opencv libraries. 
+To compile our project type make clean and then make.
+This will generate a demo executable file. Then just type ./demo 
+to run our code.
