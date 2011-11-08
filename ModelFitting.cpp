@@ -251,8 +251,6 @@ int Compute_Matching_Score (double * cms_image_point) {
   if( (j < 0) || (j >= lineImage->width) || (i < 0) || (i >= lineImage->height)) {
     return 0;
   }
-	if(lineImage == NULL)
-		std::cout << "Blah" << endl;
 
   float* data = (float *)lineImage->imageData;
   
@@ -260,7 +258,7 @@ int Compute_Matching_Score (double * cms_image_point) {
 	int green = ((uchar *)(lineImage->imageData + i*lineImage->widthStep))[j*lineImage->nChannels + 1];
 	int blue = ((uchar *)(lineImage->imageData + i*lineImage->widthStep))[j*lineImage->nChannels + 0];
   
-  if(red > 200) {
+  if(red+green+blue > 650) {
     return 2;
   }
   else {
